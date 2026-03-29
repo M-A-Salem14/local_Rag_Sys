@@ -1,0 +1,6 @@
+# Add your Python dependencies here
+# Example:
+# lancedb
+# onnxruntime
+# requests
+# ollama
