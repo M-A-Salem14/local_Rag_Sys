@@ -81,7 +81,8 @@ LLM_GENERAL  = "qwen3:14b"
 # Specify the specialized model for complex reasoning and logical inference tasks.
 # Deepseek-R1:14b is optimized for reasoning-heavy tasks and multi-step problem solving.
 # Using different models allows routing queries to the most appropriate model for the task.
-LLM_REASON   = "deepseek-r1:14b"
+# LLM_REASON   = "deepseek-r1:14b"
+LLM_REASON   = "qwen3:14b" #TEMP: Use general model for all queries until we have DeepSeek ready locally ---
 
 # ============================================================================
 # HYBRID RETRIEVAL WEIGHTS (RRF Fusion)
