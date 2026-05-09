@@ -29,9 +29,13 @@ def index_directory(data_dir: Path = DATA_DIR, batch_size: int = 32):
     all_chunks, all_meta = [], []
 
     for fpath in tqdm(files, desc="Chunking"):
-        text   = fpath.read_text(encoding="utf-8", errors="ignore")
+        text   = fpath.read_text(encoding="utf-8", errors="ignore").strip()
+        if not text:
+            continue
         chunks = chunk_text(text)
         for idx, chunk in enumerate(chunks):
+            if not chunk.strip():
+                continue
             all_chunks.append(chunk)
             all_meta.append({
                 "id":        str(uuid.uuid4()),
