@@ -55,7 +55,16 @@ DB_DIR       = BASE_DIR / "db"
 MODELS_DIR   = BASE_DIR / "models"
 
 # ============================================================================
-# LANCEDB CONFIGURATION
+# CHUNKING DEBUG LOG
+# ============================================================================
+# Output directory for chunking debug reports.
+# Reports are timestamped Markdown files written here after each index run.
+CHUNKING_LOG_DIR  = BASE_DIR / "logs"
+
+# Logging mode controls how much detail is captured:
+#   "metadata" — file summaries, chunk word/char counts, overlap checks, anomalies
+#   "full"     — everything in metadata PLUS full chunk text content and overlap regions
+CHUNKING_LOG_MODE = "metadata"
 # ============================================================================
 # Specify the name of the table in LanceDB where documents will be stored.
 # This table holds the embeddings, document chunks, and metadata for all indexed documents.

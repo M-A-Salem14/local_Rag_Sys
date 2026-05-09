@@ -5,3 +5,6 @@ db/
 
 # Also exclude model cache if you have it locally
 models/
+
+# Chunking debug logs
+logs/
