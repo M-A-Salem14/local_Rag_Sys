@@ -1,6 +1,7 @@
-# Add your Python dependencies here
-# Example:
-# lancedb
-# onnxruntime
-# requests
-# ollama
+torch
+FlagEmbedding
+lancedb
+pyarrow
+numpy
+requests
+tqdm
