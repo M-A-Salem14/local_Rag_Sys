@@ -4,8 +4,9 @@ from pathlib import Path
 
 
 class ChunkingLogger:
-    def __init__(self, mode: str, output_dir: Path):
+    def __init__(self, mode: str, output_dir: Path, strategy: str = "legacy"):
         self.mode = mode  # "metadata" | "full"
+        self.strategy = strategy  # "legacy" | "markdown"
         self.output_dir = output_dir
         self.files = []
         self.anomalies = []
@@ -71,7 +72,7 @@ class ChunkingLogger:
         lines = [
             f"# Chunking Debug Log",
             f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-            f"Mode: {self.mode}",
+            f"Mode: {self.mode} | Strategy: {self.strategy}",
             f"Files scanned: {len(self.files)} | Skipped: {skipped_count} | Total chunks: {total_chunks}",
             "",
         ]

@@ -65,6 +65,19 @@ CHUNKING_LOG_DIR  = BASE_DIR / "logs"
 #   "metadata" — file summaries, chunk word/char counts, overlap checks, anomalies
 #   "full"     — everything in metadata PLUS full chunk text content and overlap regions
 CHUNKING_LOG_MODE = "metadata"
+
+# ============================================================================
+# CHUNKING STRATEGY
+# ============================================================================
+# Select chunking algorithm:
+#   "legacy"   — original word-based sliding window (512 words, 64 overlap)
+#   "markdown" — hybrid: split on markdown headers → paragraphs → sentences
+CHUNKING_STRATEGY  = "markdown"
+
+# Parameters for "markdown" strategy:
+CHUNK_MAX_WORDS    = 512   # max words per chunk before sub-splitting
+CHUNK_MIN_WORDS    = 50    # sections below this get merged with the next
+CHUNK_OVERLAP_SENT = 1     # sentence overlap between sub-split chunks
 # ============================================================================
 # Specify the name of the table in LanceDB where documents will be stored.
 # This table holds the embeddings, document chunks, and metadata for all indexed documents.
