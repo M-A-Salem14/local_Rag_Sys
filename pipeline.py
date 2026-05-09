@@ -66,7 +66,8 @@ def run_rag(question: str, verbose: bool = False) -> dict:
             print(f"             \"{preview}...\"")
 
     # ── Free VRAM before LLM ──────────────────────────────
-    torch.cuda.empty_cache()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
 
     # ── Stage 3: Generation ───────────────────────────────
     use_r      = is_reasoning_query(question)

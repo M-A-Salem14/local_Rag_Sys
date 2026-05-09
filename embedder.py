@@ -1,23 +1,23 @@
+import sys
 from FlagEmbedding import BGEM3FlagModel
 import numpy as np
-import torch
-from config import EMBED_MODEL
-
-use_cuda = torch.cuda.is_available()
-if use_cuda:
-    try:
-        _ = torch.zeros(1, device="cuda")
-    except RuntimeError:
-        use_cuda = False
+from config import EMBED_MODEL, DEVICE
 
 
 class BGEEmbedder:
-    def __init__(self):
+    def __init__(self, device: str = DEVICE):
+        use_fp16 = device == "cuda"
         self.model = BGEM3FlagModel(
             EMBED_MODEL,
-            use_fp16=use_cuda,
-            device="cuda" if use_cuda else "cpu",
+            use_fp16=use_fp16,
+            device=device,
         )
+        if device != "cuda":
+            print(
+                "\033[91m[WARNING] Embedder running on CPU — "
+                "expect slower indexing and queries.\033[0m",
+                file=sys.stderr,
+            )
 
     def encode(self, texts: list[str], batch_size: int = 16) -> dict:
         if not texts:
@@ -38,5 +38,5 @@ class BGEEmbedder:
     def encode_query(self, query: str) -> dict:
         return self.encode([query])
 
-# Module-level singleton
+
 embedder = BGEEmbedder()

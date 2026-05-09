@@ -2,7 +2,35 @@
 # pathlib is a standard library module in Python that provides an object-oriented interface for filesystem paths.
 # The Path class represents filesystem paths and provides methods for path manipulation, making it easier and more robust than using strings for paths.
 # This import is necessary for defining and working with file and directory paths in the configuration.
+import sys
+import torch
 from pathlib import Path
+
+
+def _resolve_device() -> str:
+    """Probe CUDA and return 'cuda' if working, 'cpu' with a warning if not."""
+    if not torch.cuda.is_available():
+        print(
+            "\033[91m[WARNING] CUDA not available — running on CPU. "
+            "This will be significantly slower.\033[0m",
+            file=sys.stderr,
+        )
+        return "cpu"
+    try:
+        _ = torch.zeros(1, device="cuda")
+        del _
+        torch.cuda.empty_cache()
+        return "cuda"
+    except RuntimeError as e:
+        print(
+            f"\033[91m[WARNING] CUDA probe failed ({e}) — "
+            f"falling back to CPU. This will be significantly slower.\033[0m",
+            file=sys.stderr,
+        )
+        return "cpu"
+
+
+DEVICE = _resolve_device()
 
 # ============================================================================
 # PATHS AND DIRECTORIES

@@ -1,21 +1,12 @@
-import os
-import torch
-
-# Disable broken CUDA (RTX 5070 sm_120 needs PyTorch 2.7+)
-if torch.cuda.is_available():
-    try:
-        _ = torch.zeros(1, device="cuda")
-    except RuntimeError:
-        os.environ["CUDA_VISIBLE_DEVICES"] = ""
-        # Force re-evaluation by patching cuda availability
-        torch.cuda.is_available = lambda: False
-        torch.cuda.device_count = lambda: 0
-
 import argparse
+from config   import DEVICE
 from indexer  import index_directory
 from pipeline import run_rag
 
+
 def main():
+    print(f"Device: {DEVICE}")
+
     parser = argparse.ArgumentParser(description="Local RAG System")
     sub = parser.add_subparsers(dest="cmd")
 
